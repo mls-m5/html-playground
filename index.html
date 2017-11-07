@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>
+	Rotationstest
+	</title>
+	<style>
+.rot {
+	height: 100px;
+	width: 100px;
+	line-height: 100px;
+	text-align: center;
+	transform: rotate(20deg);
+	background-color: blue;
+}
+	</style>
+</head>
+<body>
+
+<div class="container">
+	<div class="rot" id="rot"> Hej →</div>
+</div>
+<script type="text/javascript">
+
+let i = 0;
+let rot = document.getElementById("rot");
+
+setInterval(function() {
+	++i;
+	rot.style.transform = "rotate(" + i * 1 + "deg)"
+}, 20);
+
+
+</script>
+
+</body>
+</html>
