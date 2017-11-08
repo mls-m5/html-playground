@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Splines</title>
+  </head>
+  <body>
+    <canvas width="400" height="400" id="canvas"></canvas>
+
+    <script>
+
+
+var canvas = document.getElementById("canvas");
+ctx = canvas.getContext("2d");
+
+function drawLine(x1, y1, x2, y2) {
+  ctx.beginPath();
+  ctx.moveTo(x1, y1);
+  ctx.lineTo(x2, y2);
+  ctx.stroke();
+}
+
+// drawLine(0,0, 100,200)
+
+function Point(x, y) {
+  this.x = x;
+  this.y = y;
+
+  this.multiply = function(value) {
+    return new Point(this.x * value, this.y * value);
+  }
+
+  this.add = function(point) {
+    return new Point(this.x * point.x, this.y * point.y);
+  }
+}
+
+function Line(x1, y1, x2, y2) {
+  this.x1 = x1;
+  this.y1 = y1;
+  this.x2 = x2;
+  this.y2 = y2;
+
+  this.getPoint = function(amount) {
+    var inv = 1 - amount;
+    return new Point(x1 * amount + x2 * inv, y1 * amount + y2 * inv);
+  }
+}
+
+function drawSpline(line1, line2) {
+  var step = .1;
+  function pointBetween(amount) {
+    var p1 = line1.getPoint(amount);
+    var p2 = line2.getPoint(amount);
+    var inv = 1 - amount;
+    return new  p1.multiply(amount).add(p2.multiply(inv));
+  }
+
+  var points = [];
+  for (var i = 0; i < 1; i += step) {
+    points.push(pointBetween(i));
+  }
+
+  console.log(points);
+
+  if (points.length === 0) {
+    console.log("no points generated");
+    return;
+  }
+  ctx.beginPath();
+  ctx.moveTo(points[0].x, points[0].y);
+  for (var p in points) {
+    ctx.lineTo(p.x, p.y);
+  }
+  ctx.stroke();
+}
+
+//Something is not working
+drawSpline(new Line(0,0, 0,100), new Line(0,0,100,0));
+
+
+    </script>
+  </body>
+</html>
