@@ -25,14 +25,6 @@ function drawLine(x1, y1, x2, y2) {
 function Point(x, y) {
   this.x = x;
   this.y = y;
-
-  this.multiply = function(value) {
-    return new Point(this.x * value, this.y * value);
-  }
-
-  this.add = function(point) {
-    return new Point(this.x * point.x, this.y * point.y);
-  }
 }
 
 function Line(x1, y1, x2, y2) {
@@ -48,12 +40,16 @@ function Line(x1, y1, x2, y2) {
 }
 
 function drawSpline(line1, line2) {
-  var step = .1;
+  var step = .01;
   function pointBetween(amount) {
     var p1 = line1.getPoint(amount);
     var p2 = line2.getPoint(amount);
+    // console.log("pointbetween:");
+    // console.log(p1);
+    // console.log(p2);
+
     var inv = 1 - amount;
-    return new  p1.multiply(amount).add(p2.multiply(inv));
+    return new Point(p1.x * amount + p2.x * inv, p1.y * amount + p2.y * inv);
   }
 
   var points = [];
@@ -61,22 +57,26 @@ function drawSpline(line1, line2) {
     points.push(pointBetween(i));
   }
 
-  console.log(points);
+  // console.log(points);
 
   if (points.length === 0) {
-    console.log("no points generated");
+    // console.log("no points generated");
     return;
   }
   ctx.beginPath();
   ctx.moveTo(points[0].x, points[0].y);
-  for (var p in points) {
+  // console.log("drawing line");
+  for (var i in points) {
+    var p = points[i];
+    // console.log(p);
+
     ctx.lineTo(p.x, p.y);
   }
   ctx.stroke();
 }
 
 //Something is not working
-drawSpline(new Line(0,0, 0,100), new Line(0,0,100,0));
+drawSpline(new Line(0,0, 0,1000), new Line(0,0,300,0));
 
 
     </script>
