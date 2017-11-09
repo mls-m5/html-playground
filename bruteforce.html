@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>PW-test</title>
+</head>
+<body>
+<textarea id="pw"></textarea>
+<button onclick="startTest()">test</button>
+<script type="text/javascript">
+	var pwtext = document.getElementById("pw");
+	var pw = "";
+	var characters = "1234567890abcdefghijklmnopqrstuvxyz";
+
+	function nestedTest(beginning, depth) {
+		for (var i = 0; i < characters.length; ++i) {
+			var c = characters[i];
+			console.log("testing " + beginning + c);
+			if (beginning + c === pw) {
+				console.log("found it: " + beginning + c);
+				return true;
+			}
+		}
+		if (depth > 0) {
+			for (var i = 0; i < characters.length; ++i) {
+				var c = characters[i];
+				var str = beginning + c;
+				var ret = nestedTest(str, depth -1);
+				if (ret) {
+					return ret;
+				}
+			}
+		}
+		return false;
+	}
+
+	function startTest() {
+		pw = pwtext.value;
+		console.log("password is " + pw);
+		console.log("testing...");
+		if (nestedTest("", 10)) {
+			console.log("guessed password");
+		}
+		else {
+			console.log("failed to guess password :(");
+		}
+	}
+
+</script>
+</body>
+</html>
