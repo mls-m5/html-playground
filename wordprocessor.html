@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Word processor</title>
+	<style type="text/css">
+		html, body {
+			height: 100%;
+			margin: 0px;
+		}
+
+		.page {
+			height: 100%;
+			width: 100%;
+			display: flex;
+			flex-direction: column;
+		}
+		.textdiv {
+			/*height: 100%;
+			width: 100%;*/
+			display: flex;
+			flex-grow: 1;
+			overflow: hidden;
+		}
+		.menu {
+			display: flex;
+		}
+
+		#the_text {
+			box-sizing: border-box;
+			resize: none;
+			flex: 1;
+		}
+	</style>
+</head>
+<body>
+	<div class="page">
+		<div class="menu">
+		hej det här är en meny
+		</div>
+		<div class="textdiv">
+			<textarea id="the_text" placeholder="type here..."></textarea>
+		</div>
+	</div>
+</body>
+</html>
